@@ -1,48 +1,104 @@
-import React from 'react';
+import React, { useState } from 'react';
+import LoginController from '../../controller/controller.login.create';
+import { useNavigate } from 'react-router-dom';
 
 
 const LoginPage = () => {
-  function handlesubmit(email:string, password:string) {
-    console.log(email, password);//ja esta vindo aq oq foi digitado.
-    //faco aqui a conexao com a api e vejo se retorna true ou false
-    //nesse caso vou retornar true
-    if (email === 'a@a' && password === 'a') {
-      window.location.href = '/home';
-    }else{
-      alert("Email ou senha inválidos tente a@a a");
+  const [isRegister, setIsRegister] = useState<boolean>(false);
+  const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+
+  function changeButton(): void {
+    setIsRegister(prevState => !prevState);
+  }
+
+  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    if (isRegister) {
+      register(email, password, name);
+    } else {
+      login(email, password);
     }
   }
 
-//   #5C4033
-// Dark Green	#2F4F2F
-// Dark Green Copper	#4A766E
-// Dark Olive Green	#4F4F2F
+  async function login(email: string, password: string) {
+    console.log(email, password);
+    const login = new LoginController();
+    const logged = await login.loginController(email, password)
+    if (logged) {
+      navigate('/home');
+    }else{
+      alert('Não foi possível fazer login');
+    }
+    
+  }
+
+  async function register(email: string, password: string, name: string) {
+    console.log(email, password, name);
+    const register = new LoginController();
+    const sucessRegister = await register.CreateController(email, password, name);    
+    if (sucessRegister){
+      alert("Registrado com sucesso!")
+    }else {
+      alert('Não foi possível registrar!');
+    }
+    setIsRegister(false);
+  }
+
   return (
-    <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100vw', height: '100vh',backgroundColor:"#fff"}}>
-      <div style={{borderRadius: '8px', border: '1px solid #ccc', padding: '70px', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)', maxWidth: '400px', margin: '0 auto',
-        backgroundColor:"#4a766e",borderWidth:2,borderColor:"#000"}}>
-        <h1 style={{textAlign: 'center'}}>Login</h1>
-        <form style={{textAlign: 'center'}} onSubmit={(e) => {
-            e.preventDefault();
-            const email = (document.getElementById('email') as HTMLInputElement).value;
-            const password = (document.getElementById('password') as HTMLInputElement).value;
-            handlesubmit(email, password);
-          }}>
-          <div style={{display: 'flex', flexDirection: 'column'}}>
-          <div style={{display:'flex', flexDirection:"column"}}>
-          <label htmlFor="email" style={{fontSize:20,marginRight:10, alignContent:"flex-start"}}>Email</label>
-          <input type="email" id="email" style={{marginBottom: '10px'}} />
+    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100vw', height: '100vh', backgroundColor: "#fff" }}>
+      <div style={{ borderRadius: '8px', border: '1px solid #ccc', padding: '70px', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)', maxWidth: '400px', margin: '0 auto', backgroundColor: "#4a766e", borderWidth: 2, borderColor: "#000" }}>
+        <h1 style={{ textAlign: 'center' }}>{isRegister ? "Registrar" : "Login"}</h1>
+        <form style={{ textAlign: 'center' }} onSubmit={handleSubmit}>
+          {isRegister && (
+            <div style={{ display: 'flex', flexDirection: 'column', marginBottom: '10px' }}>
+              <label htmlFor="name" style={{ fontSize: 20, marginRight: 10, alignContent: "flex-start" }}>Nome</label>
+              <input
+                type="text"
+                id="name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                style={{ marginBottom: '10px' }}
+              />
+            </div>
+          )}
+          <div style={{ display: 'flex', flexDirection: 'column', marginBottom: '10px' }}>
+            <label htmlFor="email" style={{ marginRight: 10, fontSize: 20, alignContent: "flex-start" }}>Email</label>
+            <input
+              type="email"
+              id="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              style={{ marginBottom: '10px' }}
+            />
           </div>
-          <div style={{display:'flex', flexDirection:"column"}}>
-          <label htmlFor="password"style={{marginRight:10,fontSize:20}}>Password</label>
-          <input type="password" id="password" style={{marginBottom: '10px'}} />
+          <div style={{ display: 'flex', flexDirection: 'column', marginBottom: '10px' }}>
+            <label htmlFor="password" style={{ marginRight: 10, fontSize: 20 }}>Password</label>
+            <input
+              type="password"
+              id="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              style={{ marginBottom: '10px' }}
+            />
           </div>
-          <div>
-          <button type="submit" style={{backgroundColor: '#007bff', color: '#fff', border: 'none', padding: '10px 20px', borderRadius: '4px', cursor: 'pointer'}}>Login</button>
-          </div>
-          </div>
+          <button
+            type="submit"
+            style={{ backgroundColor: '#007bff', color: '#fff', border: 'none', width: "95%", borderRadius: '4px', cursor: 'pointer', marginRight: 10 }}
+          >
+            {isRegister ? "Registrar" : "Login"}            
+          </button>
         </form>
-        
+        {!isRegister && (
+          <button
+            onClick={changeButton}
+            style={{ marginTop: 10, backgroundColor: '#007bff', color: '#fff', border: 'none', width: "95%", borderRadius: '4px', cursor: 'pointer' }}
+          >
+            Cadastrar
+          </button>
+        )}
       </div>
     </div>
   );
