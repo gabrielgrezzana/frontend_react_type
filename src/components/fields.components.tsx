@@ -59,7 +59,7 @@ const FieldComponent:React.FC<FieldComponentProps> = ({items}) : JSX.Element => 
         </div>
           )}
           <div style={{ display: "flex", alignItems: "center",flexDirection:"column" }}>
-            <span style={{ textAlign: "center", fontSize: 15, fontWeight: "bold" }}>
+            <span style={{ textAlign: "center", fontSize: 15, fontWeight: "bold" ,color:"#fff"}}>
               {item.description}
             </span>
             <button

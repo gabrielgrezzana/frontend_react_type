@@ -18,10 +18,10 @@ const HomeScreen = ():JSX.Element => {
   },[])
 
   return (    
-    <div style={{display: "flex", flexDirection: "column", alignItems: "center", height: "100%",width:"99.1vw",backgroundColor:"#4a766e"}}>
+    <div style={{display: "flex", flexDirection: "column", alignItems: "center", height: "100%",width:"100vw",backgroundColor:"#4a766e"}}>
       <div style={{display:"flex",flexDirection:"column"}}>
       <div>
-        <h1 style={{textAlign: "center", color:"#000"}}>FastFoodChoise</h1>
+        <h1 style={{textAlign: "center", color:"#000",fontSize:60}}>FastFoodChoise</h1>
       </div>      
       <div style={{marginTop: "25px"}}>
       <div style={{display: "flex", justifyContent: "center", marginTop: 25}}>
