@@ -16,9 +16,7 @@ class ServiceVotation {
     let vote:string = "";
     let id_user:number = 0;
     let info:data;
-    const token = localStorage.getItem('authToken')
-    console.log(token)
-    console.log("entrou aqui1")
+    const token = localStorage.getItem('authToken')    
     await axios.post("http://localhost:8000/api/auth/me",{},{
       headers:{
         Authorization: `Bearer ${token}`
@@ -26,11 +24,10 @@ class ServiceVotation {
     })
     .then((response) => {
       info = response.data;
-      id_user = info.id      
-      console.log(info,id_user)
+      id_user = info.id            
     })
     .catch(() => {
-      vote = "Error em axios"
+      vote = "Erro de chamada."
     })
 
     await axios.post("http://localhost:8000/api/votation/create",{

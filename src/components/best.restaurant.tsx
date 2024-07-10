@@ -17,8 +17,7 @@ const BestRestaurant = () :JSX.Element => {
     } else{
       setRestaurant(best);
       setWinner(true);
-      setShowAnimation(true);
-      // alert(`Restaurante ganhador é: ${best.name}`)
+      setShowAnimation(true);      
     }    
   }
 

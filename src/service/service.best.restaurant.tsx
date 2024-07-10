@@ -15,7 +15,7 @@ class ServiceBestRestaurant {
     };    
     await axios.get("http://localhost:8000/api/votation/read-results")
     .then((response) => {
-      const data:Restaurant[] = response.data      
+      const data:Restaurant[] = response.data          
 
       bestRestaurant = data.reduce((max,item) => (item.votes > max.votes ? item : max), data[0]);
       return bestRestaurant;

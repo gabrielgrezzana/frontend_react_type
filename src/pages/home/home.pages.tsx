@@ -18,7 +18,7 @@ const HomeScreen = ():JSX.Element => {
   },[])
 
   return (    
-    <div style={{display: "flex", flexDirection: "column", alignItems: "center", height: "100%",width:"100vw",backgroundColor:"#4a766e"}}>
+    <div style={{display: "flex", flexDirection: "column", alignItems: "center", height: "100%",width:"100vw",backgroundColor:"#fff"}}>
       <div style={{display:"flex",flexDirection:"column"}}>
       <div>
         <h1 style={{textAlign: "center", color:"#000",fontSize:60}}>FastFoodChoise</h1>
@@ -27,8 +27,7 @@ const HomeScreen = ():JSX.Element => {
       <div style={{display: "flex", justifyContent: "center", marginTop: 25}}>
         <BestRestaurant />        
       </div>
-      <FieldComponent items={data}/>
-      
+      <FieldComponent items={data}/>      
       </div>
       </div>
     </div>

@@ -1,21 +1,29 @@
 import Fields from "../interface/filds.interface";
 import ControllerVotation from "../controller/controller.votation";
+import { useState } from "react";
+import HelperText from "./helpertext";
+
 
 interface FieldComponentProps {
   items: Fields[];
 }
 
 
-const FieldComponent:React.FC<FieldComponentProps> = ({items}) : JSX.Element => {
+const FieldComponent:React.FC<FieldComponentProps> = ({items}) : JSX.Element => {  
+  const [sucess, setSucess] = useState<boolean>(false);
+  const [message, setMessage] = useState<string>("");
+
   async function votationSubmit(id_restaurant:number) {
+    setSucess(false);
     const voting = new ControllerVotation();
     const vote = await voting.votationController(id_restaurant);
-
-    if(vote){
-      alert(vote)
-    }else{
-      alert(vote)
-    }
+    setMessage(vote);
+    setSucess(true);
+    // if(vote){
+    //   alert(vote)
+    // }else{
+    //   alert(vote)
+    // }
     
   }
   
@@ -35,9 +43,14 @@ const FieldComponent:React.FC<FieldComponentProps> = ({items}) : JSX.Element => 
             flexDirection: "column",
             alignItems: "center",
             justifyContent: "center",
-            boxSizing: "border-box"
+            boxSizing: "border-box",
+            borderRadius:40,
           }}
         >
+          {<HelperText message={message} visible={sucess}/>}
+          <div style={{marginBottom:20}}>
+            <span style={{color:"#fff",fontSize:22}}>{item.name}</span>
+          </div>
           {item.image && (
            <div style={{ 
             width: 200, 
@@ -85,21 +98,8 @@ const FieldComponent:React.FC<FieldComponentProps> = ({items}) : JSX.Element => 
               <span role="img" aria-label="heart"  >❤️</span>
             </button>
           </div>
-        </div>
-        
-      ))}
-
-      {/* <div style={{backgroundColor:"#ccc" ,width:"25%",height:115,padding:50, marginTop:25,alignContent:"center",alignItems:"center"}}>
-        <div style={{width:200,height:115}}>        
-        </div>
-        <div style={{display:"flex",justifyContent:"center",alignItems:"center"}}>
-        <text style={{textAlign:"center",fontSize:15,fontWeight:"bold"}}>restaurante bom de mais</text>
-        <button style={{width:30,height:30,display:"flex",alignItems:"center",justifyContent:"center",textAlign:"center",fontSize:15,fontWeight:"bold",backgroundColor:"red",borderRadius:15,marginLeft:5}}>
-          <span role="img" aria-label="heart" >❤️</span>
-        </button>
-        </div>
-      </div> */}
-      
+        </div>        
+      ))}      
     </div>
   );
 };

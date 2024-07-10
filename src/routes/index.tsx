@@ -5,20 +5,7 @@ import LoginPage from '../pages/login/login.pages';
 
 const Rotas: React.FC = () => {
   return (
-    <Router>
-      {/* <div>
-        <nav>
-          <ul>
-            <li>
-              <Link to="/">LoginPage</Link>
-            </li>
-            <li>
-              <Link to="/home">HomeScreen</Link>
-            </li>
-          </ul>
-        </nav>
-        </div> */}
-
+    <Router>    
         <Routes>
           <Route path="/" element={<LoginPage />} />
           <Route path="/home" element={<HomeScreen />} />          

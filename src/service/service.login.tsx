@@ -1,5 +1,6 @@
 import axios from 'axios'
 
+
 class LoginService {  
 
   public async LoginService(email:string,password:string):Promise<boolean> {    
@@ -9,28 +10,26 @@ class LoginService {
       password:password
     })
     .then((response) => {            
-      localStorage.setItem('authToken', response.data.access_token)      
-      console.log(response);
+      localStorage.setItem('authToken', response.data.access_token)          
       logged = true;
     })
-    .catch((err):void => {console.log(err)})
+    .catch(():void => {logged=false})
     
     return logged;
   }
 
-  public async CreateUserService(email:string,password:string,name:string):Promise<boolean> {
+  public async CreateUserService(email:string,password:string,name:string):Promise<boolean> {   
     let registred = false;
     await axios.post("http://localhost:8000/api/user/create",{
       name: name,
       email: email,
       password: password
     })
-    .then(response => {
-      registred = true;
-      console.log(response)
-    }).catch(error => {
-      console.log("aconteceu algum erro na chamada"+error)
-    })
+    .then(():void => {
+      registred = true;      
+    }).catch(():void => {
+      registred = false;
+    })    
     return registred;
   }
 
